@@ -1,0 +1,14 @@
+asgiref==3.8.1
+Django==5.2
+sqlparse==0.5.3
+tzdata==2025.2
+djangorestframework
+psycopg2-binary
+django-cors-headers
+django-rq
+redis
+pytest
+pytest-django
+coverage
+djoser  # für einfache User Auth API
+drf-yasg  # Swagger Docs

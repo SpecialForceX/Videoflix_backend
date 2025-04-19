@@ -1,0 +1,34 @@
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+*.log
+
+# --- Django/Migrations ---
+*/migrations/
+db.sqlite3
+
+# --- Env / Virtualenv ---
+env/
+.venv/
+*.env
+
+# --- VSCode ---
+.vscode/
+*.code-workspace
+
+# --- Test & Coverage ---
+.coverage
+.pytest_cache/
+
+# --- Static / Media Uploads ---
+static/
+media/
+
+# --- JSON Dumps / temporäre Daten ---
+*.json
+
+# --- Sonstige ---
+.DS_Store
