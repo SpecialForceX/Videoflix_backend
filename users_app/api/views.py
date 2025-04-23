@@ -22,6 +22,7 @@ class RegistrationView(APIView):
         serializer = RegistrationSerializer(data=request.data)
         print("📩 Registrierung POST-Request:", request.data)
         if serializer.is_valid():
+            print("✅ Serializer ist gültig")
             user = serializer.save()
             print("📧 Sende Aktivierungs-E-Mail an:", user.email)
             send_activation_email(user) 
