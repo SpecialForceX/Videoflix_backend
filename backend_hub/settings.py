@@ -154,8 +154,8 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    '34.159.72.184',
-    'videoflix.patrickbatke.de'
+    "https://patrickbatke.de",
+    "http://localhost:4200",
 ]
 
 MEDIA_URL = '/media/'
