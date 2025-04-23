@@ -6,6 +6,9 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 
 def send_activation_email(user):
+    print("📨 send_activation_email() wurde aufgerufen!")
+    print("➡️ Mail geht an:", user.email)
+
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = default_token_generator.make_token(user)
     activation_link = f"https://videoflix.patrickbatke.de/api/users/activate/{uid}/{token}/"
