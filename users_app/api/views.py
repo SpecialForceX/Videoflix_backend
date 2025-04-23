@@ -23,6 +23,7 @@ class RegistrationView(APIView):
         print("📩 Registrierung POST-Request:", request.data)
         if serializer.is_valid():
             user = serializer.save()
+            print("📧 Sende Aktivierungs-E-Mail an:", user.email)
             send_activation_email(user) 
             return Response({"detail": "Bitte bestätige deine E-Mail-Adresse."}, status=status.HTTP_201_CREATED)
         return Response({"detail": "Bitte überprüfe deine Eingaben und versuche es erneut."}, status=status.HTTP_400_BAD_REQUEST)
