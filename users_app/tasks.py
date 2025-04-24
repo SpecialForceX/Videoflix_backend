@@ -6,6 +6,19 @@ from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 
 def send_activation_email(user):
+    """
+    Sends an account activation email to the specified user.
+
+    The email includes a unique activation link constructed using a token and
+    a base64-encoded user ID. The HTML content is rendered from a template,
+    with a plain text fallback for email clients that do not support HTML.
+
+    Args:
+        user (CustomUser): The user instance to whom the activation email will be sent.
+
+    Returns:
+        None
+    """
     print("📨 send_activation_email() wurde aufgerufen!")
     print("➡️ Mail geht an:", user.email)
 
@@ -17,16 +30,13 @@ def send_activation_email(user):
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email = [user.email]
 
-    # HTML-Inhalt aus dem Template
     html_content = render_to_string("emails/activation.html", {
         "user": user,
         "activation_link": activation_link
     })
 
-    # Fallback-Text für einfache Mail-Clients
     text_content = f"Hello,\nPlease activate your account using this link:\n{activation_link}"
 
-    # Mail zusammensetzen und senden
     email = EmailMultiAlternatives(subject, text_content, from_email, to_email)
     email.attach_alternative(html_content, "text/html")
     email.send()

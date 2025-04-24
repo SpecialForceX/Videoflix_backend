@@ -14,6 +14,23 @@ RESOLUTIONS = {
 
 @job('default', timeout=None)
 def transcode_video(video_id):
+    """
+    Background job to transcode a video into HLS format with multiple resolutions.
+
+    This function uses FFMPEG to transcode the input video into three quality levels:
+    480p, 720p, and 1080p. It generates `.m3u8` playlist files and `.ts` segment files 
+    for each resolution and a master playlist to combine them.
+
+    Args:
+        video_id (int): The ID of the video to be transcoded.
+
+    Side Effects:
+        - Creates HLS output directory and files on disk.
+        - Logs process output to the console.
+
+    Returns:
+        None
+    """
     video = Video.objects.get(id=video_id)
     input_path = video.video_file.path
 

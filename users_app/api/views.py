@@ -18,9 +18,21 @@ from django.shortcuts import redirect
 
 
 class RegistrationView(APIView):
-    
+    """
+    API endpoint for user registration.
+
+    Accepts user data (like email and password), validates it using the
+    RegistrationSerializer, and sends an activation email upon success.
+    """
     permission_classes = [AllowAny]
+
     def post(self, request):
+        """
+        Register a new user.
+
+        If the data is valid, the user is created and an activation email is sent.
+        Returns a success message or an error message.
+        """
         serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
@@ -30,8 +42,20 @@ class RegistrationView(APIView):
 
 
 class ActivateAccountView(APIView):
+    """
+    API endpoint for account activation via email confirmation.
+
+    This view is accessed through a link sent to the user's email.
+    It checks the token and activates the user account if valid.
+    """
     permission_classes = [AllowAny]
     def get(self, request, uidb64, token):
+        """
+        Activate user account.
+
+        Decodes the user ID, validates the token, and activates the user if valid.
+        Redirects to frontend with query parameter indicating activation status.
+        """
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
             user = CustomUser.objects.get(pk=uid)
@@ -47,9 +71,20 @@ class ActivateAccountView(APIView):
 
 
 class PasswordResetRequestView(APIView):
+    """
+    API endpoint for initiating a password reset.
+
+    Accepts an email address and sends a password reset link if the user exists and is active.
+    """
     permission_classes = [AllowAny]
 
     def post(self, request):
+        """
+        Send password reset email.
+
+        If the email exists and belongs to an active user, a password reset link is emailed.
+        Always returns a generic message for security reasons.
+        """
         email = request.data.get("email")
         if email:
             try:
@@ -82,8 +117,19 @@ class PasswordResetRequestView(APIView):
         return Response({"detail": "If the email exists, a reset link has been sent."})
     
 class PasswordResetConfirmView(APIView):
+    """
+    API endpoint for setting a new password using a reset link.
+
+    Verifies the token and user ID from the URL, and resets the password if valid.
+    """
     permission_classes = [AllowAny]
     def post(self, request, uidb64, token):
+        """
+        Reset the user's password.
+
+        Requires matching 'password' and 'password2' in the request body.
+        If valid, sets the new password for the user.
+        """
         password = request.data.get("password")
         password2 = request.data.get("password2")
 
