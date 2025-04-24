@@ -25,7 +25,7 @@ env/
 
 # --- Static / Media Uploads ---
 static/
-media/
+# media/
 
 # --- JSON Dumps / temporäre Daten ---
 *.json
