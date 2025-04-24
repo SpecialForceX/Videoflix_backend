@@ -10,11 +10,11 @@ source env/bin/activate
 pip install -r requirements.txt
 
 # ⚙️ 4. Set up the database (PostgreSQL must be running)
-# You can skip if DB already exists
+You can skip if DB already exists
 psql -U postgres
-# In the psql shell, run:
-# CREATE DATABASE videoflix_db;
-# \q
+In the psql shell, run:
+CREATE DATABASE videoflix_db;
+\q
 
 # 🛠️ 5. Run migrations
 python manage.py migrate
