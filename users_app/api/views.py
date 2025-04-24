@@ -20,11 +20,8 @@ class RegistrationView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
         serializer = RegistrationSerializer(data=request.data)
-        print("📩 Registrierung POST-Request:", request.data)
         if serializer.is_valid():
-            print("✅ Serializer ist gültig")
             user = serializer.save()
-            print("📧 Sende Aktivierungs-E-Mail an:", user.email)
             send_activation_email(user) 
             return Response({"detail": "Bitte bestätige deine E-Mail-Adresse."}, status=status.HTTP_201_CREATED)
         return Response({"detail": "Bitte überprüfe deine Eingaben und versuche es erneut."}, status=status.HTTP_400_BAD_REQUEST)
@@ -57,7 +54,7 @@ class PasswordResetRequestView(APIView):
                 if user.is_active:
                     uid = urlsafe_base64_encode(force_bytes(user.pk))
                     token = default_token_generator.make_token(user)
-                    reset_link = f"http://localhost:4200/reset-password/{uid}/{token}/"
+                    reset_link = f"https://videoflix.patrickbatke.de/videoflix/reset-password/{uid}/{token}/"
 
                     subject = "Setze dein Videoflix-Passwort zurück"
                     text_content = f"Setze dein Passwort zurück: {reset_link}"
