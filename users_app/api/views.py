@@ -13,6 +13,8 @@ from django.conf import settings
 from rest_framework.permissions import AllowAny
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
+from django.shortcuts import redirect
+
 
 
 class RegistrationView(APIView):
@@ -39,9 +41,10 @@ class ActivateAccountView(APIView):
         if user is not None and default_token_generator.check_token(user, token):
             user.is_active = True
             user.save()
-            return Response({"detail": "Account wurde erfolgreich aktiviert."}, status=status.HTTP_200_OK)
+            return redirect("https://patrickbatke.de/videoflix/login?activated=true")
         else:
-            return Response({"detail": "Ungültiger oder abgelaufener Aktivierungslink."}, status=status.HTTP_400_BAD_REQUEST)
+            return redirect("https://patrickbatke.de/videoflix/login?activated=false")
+
 
 class PasswordResetRequestView(APIView):
     permission_classes = [AllowAny]
