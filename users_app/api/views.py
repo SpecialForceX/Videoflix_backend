@@ -54,8 +54,7 @@ class PasswordResetRequestView(APIView):
                 if user.is_active:
                     uid = urlsafe_base64_encode(force_bytes(user.pk))
                     token = default_token_generator.make_token(user)
-                    reset_link = f"https://videoflix.patrickbatke.de/reset-password/{uid}/{token}/"
-
+                    reset_link = f"https://videoflix.patrickbatke.de/videoflix/reset-password/{uid}/{token}/"
 
                     subject = "Setze dein Videoflix-Passwort zurück"
                     text_content = f"Setze dein Passwort zurück: {reset_link}"
